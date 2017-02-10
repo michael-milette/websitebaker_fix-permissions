@@ -1,29 +1,45 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+<?php
+// This file is part of Fix Permissions for WebsiteBaker - http://websitebaker.org
+//
+// Fix Permissions is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Fix Permissions is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Fix Permissions.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Resets the permissions for all WebsiteBaker related directories.
+ *
+ * @package    fix-permissions
+ * @copyright  2010-2017 TNG Consulting Inc. - www.tngconsulting.ca
+ * @author     Michael Milette
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * System Requirements: PHP 4.3+, Linux or Unix, WebsiteBaker 2.7 to 2.8.1
+ */
+
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html style="background: url(http://websitebaker.org/templates/WebsiteBakerOrg/img/bg1.png) repeat-x fixed #FFFFFF;">
   <head>
-    <title>WebsiteBaker CMS Fix Permissions</title>
+    <title>Fix Permissions for WebsiteBaker CMS</title>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
   </head>
   <body style="background:url(http://www.websitebaker2.org/templates/wborg/img/bg1.png) repeat-x;">
   <div style="margin:0 auto;color:#333; margin-top:15px; width:760px;">
-  <div style="background:url(http://www.websitebaker2.org/templates/wborg/img/WB-logo.png) no-repeat top left;width:100%;height:72px;border-bottom:1px solid #efefef;padding-top:8px;"><h2 style="color:#efefef;margin:0;padding-right:70px;padding-top:28px;text-align:right;">WebsitBaker Fix Permissions</h2></div>
-  <div class="content" style="background:white;width:730px;padding:0 15px 15px 15px;font-family:sans-serif;">
+    <div style="background:url(http://websitebaker.org/templates/WebsiteBakerOrg/img/WB-logo.png) no-repeat top left;width:100%;height:72px;border-bottom:1px solid #efefef;padding-top:8px;"><h2 style="color:#efefef;margin:0;padding-right:70px;padding-top:28px;text-align:right;">Fix Permissions for WebsiteBaker</h2></div>
+      <div class="content" style="background:white;width:730px;padding:0 15px 15px 15px;font-family:sans-serif;">
   <?php
-  /* Filename: fix-permissions.php
-   * Author: Michael Milette, www.TNGConsulting.ca
-   * Date: September 11, 2010
-   * Copyright 2010 TNG Consulting Inc. All rights reserved.
-   * System Requirements: PHP 4.3+, Linux or Unix, WebsiteBaker 2.7 to 2.8.1
-   * @home  http://www.websitebakers.com
-   * @version	0.2
-   * @initial date		2010-09-11
-  */
-
   // First set of files
   $perms_dirs = '0755'; // Permission for Directories
   $perms_fils = '0644'; // Permission for Files
   $extrafiles = '';
-  $filelist = explode(' ',rtrim('htaccess.txt index.php upgrade-script.php account admin framework include install search '.$extrafiles));
+  $filelist = explode(' ',rtrim('htaccess.txt index.php upgrade-script.php account admin framework include install search var '.$extrafiles));
 
   // set $WB_only to true for WebsiteBaker files only. Set to false to apply to all files and directories.
   $WB_only = true;
@@ -42,7 +58,7 @@
   $filelist2 = explode(' ',rtrim('config.php languages media modules pages temp templates '.$extrafiles2));
 
   ?>
-  <div style="font-size:0.8em;text-align:center;padding:2px;border-bottom:1px solid grey;">v0.2 - Created by <a href="http://www.tngconsulting.ca/">TNG Consulting Inc.</a> - Don't get frustrated trying to get your website setup&hellip; Just give us a call!</div>
+  <div style="font-size:0.8em;text-align:center;padding:2px;border-bottom:1px solid grey;">v0.3 - Created by <a href="http://www.tngconsulting.ca/">TNG Consulting Inc.</a> - Don't get frustrated trying to get your website setup&hellip; Just give us a call!</div>
 
 <?php
 // Apply changes to permissions
@@ -53,7 +69,7 @@ if (isset($_GET['confirmed'])) {
   }
   // DO IT!
   if ($WB_only) {
-    echo '<H2>Processing&hellip;</h2>';
+    echo '<h2>Processing&hellip;</h2>';
     if (file_exists('config.php') && file_exists('account') && file_exists('framework') && file_exists('modules') && file_exists('templates')) {
       foreach($filelist as $filename)
         fix_permissions($filename,$perms_dirs, $perms_fils);
@@ -64,11 +80,11 @@ if (isset($_GET['confirmed'])) {
       echo '<font color="red">You must place this file into the home directory of your WebsiteBaker installation.</font>';
     }
   } else {
-    echo '<H1>Resetting Permissions for <b>'.dirname(__FILE__).'</b></h1>';
+    echo '<h1>Resetting Permissions for <b>'.dirname(__FILE__).'</b></h1>';
     fix_permissions(dirname(__FILE__), $perms_dirs, $perms_fils);
   }
-  echo '<H2>Finished.</H2>';
-  echo '<b>Click <a name="bottom" href="'.basename(__FILE__).'"><font color="GREEN">BACK</font></a> to go return to the information page.</b>';
+  echo '<h2>Finished.</h2>';
+  echo '<b>Click <a name="bottom" href="'.basename(__FILE__).'"><font color="green">BACK</font></a> to go return to the information page.</b>';
 } elseif (isset($_GET['preview'])) {
   // Only display permissions that need to be changed.
   echo '<p style="color:blue;">Viewing Permissions. This may take a while&hellip; only changes will be displayed.<br>';
@@ -77,21 +93,21 @@ if (isset($_GET['confirmed'])) {
   }
   // DO IT!
   if ($WB_only) {
-    echo '<H2>Processing&hellip;</h2>';
+    echo '<h2>Processing&hellip;</h2>';
     if (file_exists('config.php') && file_exists('account') && file_exists('framework') && file_exists('modules') && file_exists('templates')) {
       foreach($filelist as $filename)
-        view_permissions($filename,$perms_dirs, $perms_fils);
+        view_permissions($filename, $perms_dirs, $perms_fils);
 
       foreach($filelist2 as $filename)
-        view_permissions($filename,$perms_dirs2, $perms_fils2);
+        view_permissions($filename, $perms_dirs2, $perms_fils2);
     } else {
       echo '<font color="red">You must place this file into the home directory of your WebsiteBaker installation.</font>';
     }
   } else {
-    echo '<H1>Viewing Permissions for <b>'.dirname(__FILE__).'</b></h1>';
+    echo '<h1>Viewing Permissions for <b>'.dirname(__FILE__).'</b></h1>';
     view_permissions(dirname(__FILE__), $perms_dirs, $perms_fils);
   }
-  echo '<H2>Finished.</H2>';
+  echo '<h2>Finished.</h2>';
   echo '<b>Click <a href="'.basename(__FILE__).'?confirmed#bottom" onclick="return confirm(\'Are you sure you want to reset the permissions?\')"><font color="red">APPLY</font></a> to begin resetting permissions<br /> or <a name="bottom" href="'.basename(__FILE__).'"><font color="green">BACK</font></a> to go back to the information page.</b>';
 } else {
   // Only Display Information
@@ -107,7 +123,7 @@ if (isset($_GET['confirmed'])) {
   <table borders="0"><tr>
   <td valign="top" width="50%">
     <p>This script applies permissions to the following file and directories including those inside the directories.</p>
-    <p>The standard WB directory list for v2.7 to 2.8.1 includes:</p>
+    <p>The standard WB directory list for v2.7 to 2.8.3 includes:</p>
     <ul>
     <li>htaccess.txt</li>
     <li>index.php</li>
@@ -125,6 +141,7 @@ if (isset($_GET['confirmed'])) {
     <li>pages</li>
     <li>temp</li>
     <li>templates</li>
+    <li>var (latest releases only)</li>
     </ul>
   </td><td valign="top">
   <p><b>Instructions:</b> Copy this file into the home directory of your website and access it using a web browser. Example: www.yoursite.com/<?php echo basename(__FILE__); ?>
@@ -219,8 +236,8 @@ function fix_permissions($dir, $perms_dirs, $perms_fils) {
   }
 }
 ?>
-</div>
-</div>
-</div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
